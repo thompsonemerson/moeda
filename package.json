@@ -1,6 +1,6 @@
 {
   "name": "moeda",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A foreign exchange rates and currency conversion using cli",
   "repository": "https://github.com/thompsonemerson/moeda",
   "license": "MIT",
@@ -24,6 +24,7 @@
     "convert"
   ],
   "dependencies": {
+    "colors": "^1.1.2",
     "got": "^6.5.0",
     "money": "^0.2.0"
   }
