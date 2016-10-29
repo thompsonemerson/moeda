@@ -17,7 +17,8 @@ let argv   = process.argv.slice(2),
 // version
 if(argv.indexOf('--version') !== -1 || argv.indexOf('-v') !== -1) {
   console.log(pkg.version)
-  return
+  process.exit(1)
+
 }
 
 
@@ -39,8 +40,9 @@ if(argv.indexOf('--help') !== -1 || argv.indexOf('-h') !== -1 || argv.length == 
        Real Brazilian: 3.15
 
       Conversion of USD 1
-`)
-  return
+  `)
+  process.exit(1)
+
 }
 
 
@@ -60,7 +62,6 @@ got(API, { json: true }).then(response => {
 
   rates.map((item, index) => {
     if(item != from.toUpperCase()) {
-
       console.log(` ${names[index].gray.italic} ${money.convert(amount, {
         from: from.toUpperCase(),
         to: item
@@ -72,4 +73,16 @@ got(API, { json: true }).then(response => {
   console.log(`
     Conversion of ${from.toUpperCase()} ${amount}
     `.italic.gray)
+  process.exit(1)
+
+}).catch(error => {
+  if(error.code === 'ENOTFOUND') {
+    console.log('   Please check your internet connection.\n'.red)
+
+  }else {
+    console.log('   Internal server error... \n'.red)
+    
+  }
+  process.exit(1)
+
 })
