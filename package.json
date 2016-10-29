@@ -1,0 +1,30 @@
+{
+  "name": "moeda",
+  "version": "1.0.0",
+  "description": "A foreign exchange rates and currency conversion using cli",
+  "repository": "https://github.com/thompsonemerson/moeda",
+  "license": "MIT",
+  "author": {
+    "name": "Emerson Thompson",
+    "email": "thompson.emerson@gmail.com",
+    "url": "http://emersonthompson.com.br"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "moeda": "./bin/cli.js"
+  },
+  "keywords": [
+    "moeda",
+    "currency",
+    "rates",
+    "exchange",
+    "convert"
+  ],
+  "dependencies": {
+    "got": "^6.5.0",
+    "money": "^0.2.0"
+  }
+}
