@@ -10,9 +10,6 @@
     "url": "http://emersonthompson.com.br"
   },
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "bin": {
     "moeda": "./bin/cli.js"
   },
