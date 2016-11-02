@@ -5,14 +5,18 @@ const pkg     = require('../package.json'),
       got     = require('got'),
       money   = require('money'),
       colors  = require('colors'),
-      API     = 'https://api.fixer.io/latest'
+      API     = 'https://api.fixer.io/latest',
+      countrynames = {
+        'RUB': '   Russian Rouble:',
+        'AUD': 'Australian Dollar:',
+        'EUR': '             Euro:'
+      }
 
 
 // arguments
 let argv   = process.argv.slice(2),
     amount = argv[0],
     from   = argv[1]
-
 
 // version
 if(argv.indexOf('--version') !== -1 || argv.indexOf('-v') !== -1) {
@@ -60,6 +64,19 @@ got(API, { json: true }).then(response => {
         '  Real Brazilian:'
       ]
 
+  if(argv.length > 2) {
+    let to = process.argv.slice(4)
+
+    rates = []
+    names = []
+
+    to.map((code) => {
+      code = code.toUpperCase()
+      rates.push(code)
+      names.push(countrynames[code])
+    })
+  }
+
   rates.map((item, index) => {
     if(item != from.toUpperCase()) {
       console.log(` ${names[index].gray.italic} ${money.convert(amount, {
@@ -81,7 +98,7 @@ got(API, { json: true }).then(response => {
 
   }else {
     console.log('   Internal server error... \n'.red)
-    
+
   }
   process.exit(1)
 
