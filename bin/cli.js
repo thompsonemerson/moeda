@@ -1,30 +1,29 @@
 #! /usr/bin/env node
 'use strict'
 
-const pkg        = require('../package.json'),
-      got        = require('got'),
-      money      = require('money'),
-      colors     = require('colors'),
-      API        = 'https://api.fixer.io/latest',
-      currencies = require('../currencies.json')
+const pkg = require('../package.json')
+const got = require('got')
+const money = require('money')
+const colors = require('colors')
+const API = 'https://api.fixer.io/latest'
+const currencies = require('../currencies.json')
 
 
 // arguments
-let argv   = process.argv.slice(2),
-    amount = argv[0],
-    from   = argv[1]
+let argv = process.argv.slice(2)
+let amount = argv[0]
+let from = argv[1]
 
 
 // version
-if(argv.indexOf('--version') !== -1 || argv.indexOf('-v') !== -1) {
+if (argv.indexOf('--version') !== -1 || argv.indexOf('-v') !== -1) {
   console.log(pkg.version)
   process.exit(1)
-
 }
 
 
 // help
-if(argv.indexOf('--help') !== -1 || argv.indexOf('-h') !== -1 || argv.length == 0) {
+if (argv.indexOf('--help') !== -1 || argv.indexOf('-h') !== -1 || !argv.length) {
   console.log(`
     Usage
       $ moeda <amount> <currency> [<...currencies>]
@@ -55,13 +54,12 @@ if(argv.indexOf('--help') !== -1 || argv.indexOf('-h') !== -1 || argv.length == 
       Conversion of USD 1
   `)
   process.exit(1)
-
 }
 
 
 // default
 console.log()
-got(API, { json: true }).then(response => {
+got(API, { json: true }).then((response) => {
   money.base  = response.body.base
   money.rates = response.body.rates
 
@@ -73,7 +71,7 @@ got(API, { json: true }).then(response => {
         '  Real Brazilian:'
       ]
 
-  if(argv.length > 2) {
+  if (argv.length > 2) {
     let to = process.argv.slice(4)
 
     rates = []
@@ -87,12 +85,11 @@ got(API, { json: true }).then(response => {
   }
 
   rates.map((item, index) => {
-    if(item !== from.toUpperCase()) {
+    if (item !== from.toUpperCase()) {
       console.log(` ${names[index].gray.italic} ${money.convert(amount, {
         from: from.toUpperCase(),
         to  : item
       }).toFixed(2).green.bold} `)
-
     }
   })
 
@@ -101,14 +98,11 @@ got(API, { json: true }).then(response => {
     `.italic.gray)
   process.exit(1)
 
-}).catch(error => {
+}).catch((error) => {
   if(error.code === 'ENOTFOUND') {
     console.log('   Please check your internet connection.\n'.red)
-
-  }else {
+  } else {
     console.log('   Internal server error... \n'.red)
-
   }
   process.exit(1)
-
 })
