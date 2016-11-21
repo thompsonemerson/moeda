@@ -62,6 +62,8 @@ Help improve these docs. Open an [issue](https://github.com/thompsonemerson/moed
 1. Push to the branch: `git push origin my-new-feature`
 1. Submit a pull request =D
 
+[![Standard - JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+
 
 ### History
 See [Releases](https://github.com/thompsonemerson/moeda/releases) for detailed changelog.

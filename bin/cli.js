@@ -8,19 +8,16 @@ const colors = require('colors')
 const API = 'https://api.fixer.io/latest'
 const currencies = require('../currencies.json')
 
-
 // arguments
 let argv = process.argv.slice(2)
 let amount = argv[0]
 let from = argv[1]
-
 
 // version
 if (argv.indexOf('--version') !== -1 || argv.indexOf('-v') !== -1) {
   console.log(pkg.version)
   process.exit(1)
 }
-
 
 // help
 if (argv.indexOf('--help') !== -1 || argv.indexOf('-h') !== -1 || !argv.length) {
@@ -56,20 +53,19 @@ if (argv.indexOf('--help') !== -1 || argv.indexOf('-h') !== -1 || !argv.length) 
   process.exit(1)
 }
 
-
 // default
 console.log()
 got(API, { json: true }).then((response) => {
-  money.base  = response.body.base
+  money.base = response.body.base
   money.rates = response.body.rates
 
-  let rates = ['USD', 'EUR', 'GBP', 'BRL'],
-      names = [
-        '      Dollar EUA:',
-        '            Euro:',
-        ' Libra Esterlina:',
-        '  Real Brazilian:'
-      ]
+  let rates = ['USD', 'EUR', 'GBP', 'BRL']
+  let names = [
+    '      Dollar EUA:',
+    '            Euro:',
+    ' Libra Esterlina:',
+    '  Real Brazilian:'
+  ]
 
   if (argv.length > 2) {
     let to = process.argv.slice(4)
@@ -86,23 +82,22 @@ got(API, { json: true }).then((response) => {
 
   rates.map((item, index) => {
     if (item !== from.toUpperCase()) {
-      console.log(` ${names[index].gray.italic} ${money.convert(amount, {
+      console.log(` ${colors.gray.italic(names[index])} ${colors.green.bold(money.convert(amount, {
         from: from.toUpperCase(),
-        to  : item
-      }).toFixed(2).green.bold} `)
+        to: item
+      }).toFixed(2))} `)
     }
   })
 
-  console.log(`
+  console.log(colors.italic.gray(`
     Conversion of ${from.toUpperCase()} ${amount}
-    `.italic.gray)
+    `))
   process.exit(1)
-
 }).catch((error) => {
-  if(error.code === 'ENOTFOUND') {
-    console.log('   Please check your internet connection.\n'.red)
+  if (error.code === 'ENOTFOUND') {
+    console.log(colors.red('   Please check your internet connection.\n'))
   } else {
-    console.log('   Internal server error... \n'.red)
+    console.log(colors.red('   Internal server error... \n'))
   }
   process.exit(1)
 })
