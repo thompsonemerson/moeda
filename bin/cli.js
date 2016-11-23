@@ -6,7 +6,7 @@ const got = require('got')
 const money = require('money')
 const colors = require('colors')
 const API = 'https://api.fixer.io/latest'
-const currencies = require('../currencies.json')
+const currencies = require('../lib/currencies.json')
 
 // arguments
 let argv = process.argv.slice(2)
