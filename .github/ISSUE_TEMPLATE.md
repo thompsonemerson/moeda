@@ -27,3 +27,5 @@ Tell us what happens instead
 **Node version**:
 
 **npm version**:
+
+**moeda version**:
