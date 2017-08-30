@@ -6,7 +6,7 @@
 
 
 <p align="center">
-  <img src="demo.gif" alt="demo gif">
+  <img src="demo_moeda.gif" alt="demo moeda gif">
 </p>
 
 
@@ -31,24 +31,9 @@ Some currency
 Examples
   $ moeda 1 usd
 
-Result
-             Euro: 0.92
-  Libra Esterlina: 0.82
-   Real Brazilian: 3.15
-
-  Conversion of USD 1
-
-Your own currencies to convert
+  or
 
   $ moeda 1 usd eur rub aud
-
-Result
-
-             Euro: 0.91
-   Russian Rouble: 62.92
-Australian Dollar: 1.30
-
-  Conversion of USD 1
 ```
 
 
