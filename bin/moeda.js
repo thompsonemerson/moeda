@@ -3,12 +3,13 @@ const money = require('money')
 const colors = require('colors')
 const ora = require('ora')
 const currencies = require('../lib/currencies.json')
-const API = 'https://api.fixer.io/latest'
+const Api = (accessKey) => (`http://data.fixer.io/api/latest?access_key=${accessKey}`)
 
 const moeda = (command) => {
   let amount = command['amount']
   let from = command['from'].toUpperCase()
   let to = command['to'].filter((item) => item !== from).map((item) => item.toUpperCase())
+  const accessKey = command.accessKey
 
   console.log()
   const loading = ora({
@@ -21,7 +22,7 @@ const moeda = (command) => {
   })
   loading.start()
 
-  got(API, { json: true }).then((response) => {
+  got(Api(accessKey), { json: true }).then((response) => {
     money.base = response.body.base
     money.rates = response.body.rates
 

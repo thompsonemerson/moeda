@@ -21,9 +21,11 @@ $ npm install -g moeda
 ```
 
 #### CLI
+
+You need Fixer.io api key, you can get one at https://fixer.io/
 ```
 Usage
-  $ moeda <amount> <currency> [<...currencies>]
+  $ FIXER_ACCESS_KEY=your_fixer_api_key moeda <amount> <currency> [<...currencies>]
 
 Some currency
   [ usd, eur, gbp, brl... ]
