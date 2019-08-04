@@ -1,4 +1,6 @@
+const chalk = require('chalk')
 const pkg = require('../package.json')
+const data = require('../lib/currencies.json')
 
 const helpers = (argv) => {
   // version
@@ -9,6 +11,11 @@ const helpers = (argv) => {
   // help
   if (argv.indexOf('--help') !== -1 || argv.indexOf('-h') !== -1 || !argv.length) {
     help()
+  }
+
+  // currencies
+  if (argv.indexOf('--currencies') !== -1 || argv.indexOf('-c') !== -1 || !argv.length) {
+    currencies()
   }
 }
 
@@ -32,6 +39,16 @@ const help = () => {
 
     $ moeda 1 usd eur rub aud
   `)
+  process.exit(1)
+}
+
+const currencies = () => {
+  console.log(chalk.gray('\n  Currencies:\n'))
+
+  Object.entries(data).map(([symbol, name]) => {
+    console.log(`  ${chalk.gray(symbol)} ${name}`)
+  })
+
   process.exit(1)
 }
 
