@@ -1,16 +1,15 @@
 const got = require('got')
-const money = require('money')
-const colors = require('colors')
 const ora = require('ora')
+const money = require('money')
+const chalk = require('chalk')
 const currencies = require('../lib/currencies.json')
-const API = 'https://api.fixer.io/latest'
+const API = 'https://api.ratesapi.io/api/latest'
 
-const moeda = (command) => {
-  let amount = command['amount']
-  let from = command['from'].toUpperCase()
-  let to = command['to'].filter((item) => item !== from).map((item) => item.toUpperCase())
+const moeda = async (command) => {
+  const amount = command['amount']
+  const from = command['from'].toUpperCase()
+  const to = command['to'].filter((item) => item !== from).map((item) => item.toUpperCase())
 
-  console.log()
   const loading = ora({
     text: 'Converting currency...',
     color: 'green',
@@ -19,31 +18,30 @@ const moeda = (command) => {
       frames: to
     }
   })
+
+  console.log()
   loading.start()
 
-  got(API, { json: true }).then((response) => {
-    money.base = response.body.base
-    money.rates = response.body.rates
-
-    to.map((item) => {
-      if (currencies[item]) {
-        loading.succeed(`${colors.green(money.convert(amount, { from: from, to: item }).toFixed(2))} ${`(${item})`.gray} ${currencies[item].italic}`)
-      } else {
-        loading.warn(`${colors.yellow(` The ${item} currency not found`)}`)
-      }
-    })
-
-    console.log()
-    console.log(colors.italic.gray(` Conversion of ${from.bold} ${amount.bold}`))
-    process.exit(1)
-  }).catch((error) => {
-    if (error.code === 'ENOTFOUND') {
-      loading.fail(colors.red('   Please check your internet connection.\n'))
+  require('dns').resolve('www.emersonthompson.com.br', async (err) => {
+    if (err) {
+      loading.fail(chalk.red('Internal server error...\n'))
+      process.exit(1)
     } else {
-      loading.fail(colors.red('   Internal server error... \n'))
-    }
+      const { body } = await got(API + `?base=${from}&symbols=${to.toString()}`, { json: true })
 
-    process.exit(1)
+      money.base = body.base
+      money.rates = body.rates
+
+      Object.entries(body.rates).map(([currency]) => {
+        const value = money.convert(amount, { from, to: currency }).toFixed(2)
+
+        loading.succeed(`${chalk.green(value)} ${chalk.gray(`(${currency})`)} ${chalk.italic(currencies[currency])}`)
+      })
+
+      console.log(chalk.gray(`\nCurrency base: ${amount} ${from}`))
+
+      return
+    }
   })
 }
 

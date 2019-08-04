@@ -11,7 +11,7 @@
 
 
 #### Info
-The `moeda` use JSON API [Fixer.io](http://fixer.io/) for current and historical foreign exchange rates published by the European Central Bank.
+The `moeda` use historical foreign exchange rates published by the European Central Bank.
 The rates are updated daily around 4PM CET.
 
 
