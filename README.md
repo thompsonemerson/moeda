@@ -13,6 +13,7 @@
 #### Info
 The `moeda` use historical foreign exchange rates published by the European Central Bank.
 The rates are updated daily around 4PM CET.
+API used for convert currencies: https://api.exchangerate.host/latest .
 
 
 #### Install
