@@ -3,7 +3,7 @@ const ora = require('ora')
 const money = require('money')
 const chalk = require('chalk')
 const currencies = require('../lib/currencies.json')
-const API = 'https://api.ratesapi.io/api/latest'
+const API = 'https://api.exchangerate.host/latest'
 
 const moeda = async (command) => {
   const amount = command['amount']
